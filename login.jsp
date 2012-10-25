@@ -1,13 +1,13 @@
 
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@taglib prefix="fn"uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <sql:query var="users" dataSource="jdbc/lut2">
     SELECT * FROM admin_users
-    WHERE  uname = ? <sql:param value="${param.username}" /> 
-    AND pw = ${param.password}
+    WHERE  uname = ? <sql:param value="${fn:escapeXml(param.username)}" /> 
+    AND pw = ? <sql:param value="${fn:escapeXml(param.password)}" />
 </sql:query>
 
     

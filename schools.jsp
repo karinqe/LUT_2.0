@@ -1,11 +1,12 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn"uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <sql:query var="school" dataSource="jdbc/lut2">
     SELECT * FROM country, school
     WHERE school.country = country.short_name
-    AND country.full_name = ? <sql:param value="${param.country}"/>
+    AND country.full_name = ? <sql:param value="${fn:escapeXml(param.country)}"/>
 </sql:query>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,10 +15,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="lutstyle.css">
-        <title>LUT 2.0 - ${param.country}</title>
+        <title>LUT 2.0 - ${fn:escapeXml(param.country)}</title>
     </head>
     <body>
-        <h1>Approved schools in  ${param.country} </h1>
+        <h1>Approved schools in  ${fn:escapeXml(param.country)} </h1>
         <br><br>
         <c:forEach var="schoolDetails" items="${school.rowsByIndex}">
 
